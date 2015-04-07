@@ -1,2 +1,2 @@
-# algo_project
-Algoritmia e Estruturas de Dados
+# Algorithm and Data Structure's
+Algorithm and Data Structure's
