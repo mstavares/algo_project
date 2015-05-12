@@ -13,9 +13,13 @@ void extension_find (char filename []) {
 int main () 
 {
     char filename [15];
+    char texto [60];
 	printf("Introduza o nome do ficheiro a ser lido.\n");
     scanf("%s", filename);
     extension_find(filename);
     printf("O nome do ficheiro e': %s\n", filename);
+    FILE *handle = fopen(filename, "rw");
+    fgets (texto, 60, handle);
+    printf("\n%s\n", texto);
     return 0;
 }
