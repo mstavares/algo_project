@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "algo.h"
 
 // force to read .txt files
 void extension_find (char filename []) {
@@ -12,14 +13,20 @@ void extension_find (char filename []) {
 
 int main () 
 {
-    char filename [15];
-    char texto [60];
+    char filename [MAX_FILENAME_LENGHT];
+    char texto [MAX_LINE_LENGHT];
 	printf("Introduza o nome do ficheiro a ser lido.\n");
     scanf("%s", filename);
     extension_find(filename);
-    printf("O nome do ficheiro e': %s\n", filename);
     FILE *handle = fopen(filename, "rw");
-    fgets (texto, 60, handle);
-    printf("\n%s\n", texto);
+    if (!handle) {
+        printf("O ficheiro indicado nao foi encontrado.\n");
+    } else {
+        while (!feof(handle)) {
+            fgets (texto, MAX_LINE_LENGHT, handle);
+            printf("%s", texto);
+        }
+    }
+    printf("\n");
     return 0;
 }

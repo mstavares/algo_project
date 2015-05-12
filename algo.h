@@ -1,0 +1,2 @@
+#define MAX_FILENAME_LENGHT 15
+#define MAX_LINE_LENGHT 60
