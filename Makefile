@@ -1,7 +1,7 @@
 CFLAGS = -Wall
 LDFLAGS = -lm
 
-computer: algo.c
+algo: algo.c
 	gcc $(CFLAGS) algo.c -o algo $(LDFLAGS)
 
 clean:
