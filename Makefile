@@ -1,8 +1,8 @@
 CFLAGS = -Wall
 LDFLAGS = -lm
 
-algo: algo.c
-	gcc $(CFLAGS) algo.c -o algo $(LDFLAGS)
+algo: algo.c line.c word.c
+	gcc $(CFLAGS) algo.c line.c word.c -o algo $(LDFLAGS)
 
 clean:
 	rm algo
