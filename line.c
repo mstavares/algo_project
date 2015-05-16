@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "word.h"
 #include "line.h"
 
 // Insert line on list by read order

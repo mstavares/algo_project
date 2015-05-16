@@ -11,8 +11,10 @@ typedef struct word {
 }word_t;
 
 word_t** search_word (word_t *tree, char word []);
-void insert_word (word_t **tree, char line []);
+void insert_words (word_t **tree, vldt_word_t *list);
+word_t* create_word (char word []);
 word_t* create_word (char word []);
 void print_words (word_t *list);
 
 #endif
+

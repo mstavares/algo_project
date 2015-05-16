@@ -15,18 +15,17 @@ void extension (char filename []) {
 
 int main () 
 {
-    //word_t *root = NULL;
+    word_t *root = NULL;
     vldt_word_t *v_head = NULL;
     line_t *head = NULL;
-	FILE *handle;
     char filename [MAX_FILENAME_LENGTH];
     char line [MAX_LINE_LENGTH];
-	printf("Introduza o nome do ficheiro a ser lido.\n");
+	printf("Type filename to be read.\n");
     scanf("%s", filename);
     extension(filename);
-    handle = fopen(filename, "r");
+    FILE *handle = fopen(filename, "r");
     if (!handle) {
-        printf("O ficheiro indicado nao foi encontrado.\n");
+        printf("The specified file was not found .\n");
     } else {
         while (!feof(handle)) {
             fgets (line, MAX_LINE_LENGTH, handle);
@@ -35,11 +34,11 @@ int main ()
             }
             insert_line_element(&head, line);
         }
-        
         line2word(head, &v_head);
-        imprime(v_head);
+        insert_words(&root, v_head);
+        //imprime(v_head);
         //print_line(head);
-        //print_words(root);
+        print_words(root);
     }
     printf("\n");
     return 0;

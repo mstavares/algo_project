@@ -1,5 +1,6 @@
 #ifndef LINE_H_
 #define LINE_H_
+#define MAX_WORD_LENGTH 15
 #define MAX_LINE_LENGTH 60
 
 // List of lines
@@ -10,7 +11,7 @@ typedef struct line {
 
 // List of validated words
 typedef struct vldt_word {
-    char word [15];
+    char word [MAX_WORD_LENGTH];
     struct vldt_word *next;
 }vldt_word_t;
 
