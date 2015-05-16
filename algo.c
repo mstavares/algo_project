@@ -2,37 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "line.h"
+#include "word.h"
 #include "algo.h"
-
-/*
-// Insert line on list by read order
-void create_line_element (line_t **list, char line [])
-{
-    line_t *ptr = NULL;
-    line_t *new = (line_t*) malloc (sizeof(line_t));
-    if (new) {
-        strcpy(new->line, line);
-        new->next = NULL;
-        if (!*list) {
-            *list = new;
-        } else {
-            for (ptr = *list; ptr->next; ptr = ptr->next);
-            ptr->next = new;
-        } 
-    }
-}
-
-// Print line list
-void print_line (line_t *list)
-{
-    line_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next) {
-        printf("%s\n", ptr->line);
-    }
-}
-
-
-*/
 
 //Force to read .txt files
 void extension (char filename []) {
@@ -45,7 +16,8 @@ void extension (char filename []) {
 int main () 
 {
     //word_t *root = NULL;
-   //line_t *head = NULL;
+    vldt_word_t *v_head = NULL;
+    line_t *head = NULL;
 	FILE *handle;
     char filename [MAX_FILENAME_LENGTH];
     char line [MAX_LINE_LENGTH];
@@ -61,12 +33,13 @@ int main ()
             if(line[(strlen(line)-1)] == '\n') {
                 line[(strlen(line)-1)] = '\0';
             }
-            //create_line_element(&head, line);
-            //insert_line(&head, line);
-            //insert(&root, line);
+            insert_line_element(&head, line);
         }
+        
+        line2word(head, &v_head);
+        imprime(v_head);
         //print_line(head);
-        //print(root);
+        //print_words(root);
     }
     printf("\n");
     return 0;

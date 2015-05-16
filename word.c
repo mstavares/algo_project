@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "line.h"
 #include "word.h"
 
 /* Search one word on tree struct
- * if exist sum 1 to counter else return the address
- * to allocate the new word
+ * if exist sum 1 to counter variable 
+ * else return the address to allocate the new word
  */
 word_t** search_word (word_t *tree, char word []) 
 {
@@ -32,20 +31,21 @@ word_t** search_word (word_t *tree, char word [])
     }
 }
 
-int insert_word (word_t **tree, char line [])
+// Adds word into word list
+void insert_word (word_t **tree, char word [])
 {
     if(!*tree) {
-        *tree = create_word_element(line);
+        *tree = create_word(word);
     } else {
-        word_t **temp = (search_word(*tree, line));
-        if (temp) {
-            *temp = create_word_element(line);
+        word_t **new = (search_word(*tree, word));
+        if (new) {
+            *new = create_word(word);
         }
     }    
-    return 0;
 }
 
-word_t* create_word_element (char word [])
+// Allocates memory for a new word
+word_t* create_word (char word [])
 {
     word_t *new = (word_t*) malloc (sizeof(word_t));
     if (new) {
@@ -57,7 +57,7 @@ word_t* create_word_element (char word [])
     return new;
 }
 
-
+// Print words list
 void print_words (word_t *list)
 {
     if (!list)
