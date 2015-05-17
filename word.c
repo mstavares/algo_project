@@ -17,16 +17,16 @@ word_t** search_word (word_t *tree, char word [])
             tree->counter += 1;
             return NULL;
         } else if(compare_result > 0) {
-            if (!tree->upper) {
-                return(&tree->upper);
+            if (!tree->right) {
+                return(&tree->right);
             } else {
-                tree = tree->upper;
+                tree = tree->right;
             }
         } else {
-            if (!tree->bellow) {
-                return(&tree->bellow);
+            if (!tree->left) {
+                return(&tree->left);
             } else {
-                tree = tree->bellow;
+                tree = tree->left;
             }
         }
     }
@@ -55,10 +55,50 @@ word_t* create_word (char word [])
     if (new) {
         strcpy(new->word, word);
         new->counter = 1;
-        new->upper = NULL;
-        new->bellow = NULL;
+        new->right = NULL;
+        new->left = NULL;
     }
     return new;
+}
+
+// Remove comma and dot from word
+void comma_and_dot (char word [])
+{
+    int tam = strlen(word)-1;
+    char symbols [] = {',', '.'};
+    if(word[tam] == symbols[0] || word[tam] == symbols[1]) {
+        word[tam] = '\0';
+    }
+}
+
+// Remove invalid words from list
+/*void invalid_word (vldt_word_t **list)
+{
+    int tam = 0;
+    int i = 0;
+    vldt_word_t *ptr = NULL;
+    for(ptr = *list; ptr; ptr = ptr->next) {
+        tam = strlen(ptr->word)-1;
+        for(i = 0; i < tam; i++) {
+            if(((ptr->word)+i) > 'A' && ((ptr->word)+i) < 'Z') {
+                continue;
+            } else if (((ptr->word)+i) > 'a' && ((ptr->word)+i) < 'a') {
+                continue;
+            } else if (((ptr->word)+i) == '-') {
+                
+            } else {
+                
+            }
+        }
+    }
+}*/
+
+void word_validation (vldt_word_t **list)
+{
+    vldt_word_t *ptr = NULL;
+    for(ptr = *list; ptr; ptr = ptr->next) {
+        comma_and_dot(ptr->word);
+    }
 }
 
 // Print words list
@@ -66,8 +106,8 @@ void print_words (word_t *list)
 {
     if (!list)
         return;
-    print_words(list->bellow);
+    print_words(list->left);
     printf("Word: %s - Occurrences: %d\n", list->word, list->counter);
-    print_words(list->upper);
+    print_words(list->right);
 }
 

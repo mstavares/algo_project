@@ -31,9 +31,9 @@ void main_menu (word_t *root, line_t *head)
                 print_words(root);
                 break;
             case 4:
-                loop = 0;
                 break;
             case 9:
+                loop = 0;
                 break;
             default:
                 puts("Invalid option selected.");
@@ -71,9 +71,8 @@ int main ()
             insert_line_element(&head, line);
         }
         line2word(head, &v_head);
+        word_validation(&v_head);
         insert_words(&root, v_head);
-        //imprime(v_head);
-        //print_line(head);
         main_menu(root, head);
     }
     printf("\n");
