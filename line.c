@@ -56,19 +56,17 @@ vldt_word_t* create_vldt_word (char word[])
     return new;
 }
 
-// Print line list
-void print_line (line_t *list)
+/* Print text
+ * pause = 0 -> Print all text
+ * pause = 1 -> Print text line by line
+ */
+void print_text (line_t *list, char pause)
 {
     line_t *ptr = NULL;
     for(ptr = list; ptr; ptr = ptr->next) {
         printf("%s\n", ptr->line);
-    }
-}
-
-void imprime (vldt_word_t *list)
-{
-    vldt_word_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next) {
-        printf("%s:%zu\n", ptr->word, strlen(ptr->word));
+        if(pause) {
+            getchar();
+        }
     }
 }

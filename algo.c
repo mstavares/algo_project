@@ -5,6 +5,42 @@
 #include "word.h"
 #include "algo.h"
 
+// Main menu
+void main_menu (word_t *root, line_t *head) 
+{
+    int option = 0;
+    int loop = 1;
+    while (loop) {
+        while(scanf("%*c"));
+        puts("Select:");
+        puts("1 - Print text");
+        puts("2 - Print text line by line");
+        puts("3 - Print all words with occurrences");
+        puts("4 - Delete word");
+        puts("9 - Exit");
+        scanf("%d", &option);
+        switch (option) {
+            case 1:
+                print_text(head, 0);
+                break;
+            case 2:
+                while(scanf("%*c"));
+                print_text(head, 1);
+                break;
+            case 3:
+                print_words(root);
+                break;
+            case 4:
+                loop = 0;
+                break;
+            case 9:
+                break;
+            default:
+                puts("Invalid option selected.");
+        }
+    }
+}
+
 //Force to read .txt files
 void extension (char filename []) {
     const char extension [] = ".txt";
@@ -20,12 +56,12 @@ int main ()
     line_t *head = NULL;
     char filename [MAX_FILENAME_LENGTH];
     char line [MAX_LINE_LENGTH];
-	printf("Type filename to be read.\n");
+	puts("Type filename to be read.");
     scanf("%s", filename);
     extension(filename);
     FILE *handle = fopen(filename, "r");
     if (!handle) {
-        printf("The specified file was not found .\n");
+        puts("The specified file was not found.");
     } else {
         while (!feof(handle)) {
             fgets (line, MAX_LINE_LENGTH, handle);
@@ -38,8 +74,9 @@ int main ()
         insert_words(&root, v_head);
         //imprime(v_head);
         //print_line(head);
-        print_words(root);
+        main_menu(root, head);
     }
     printf("\n");
+    puts("See ya");
     return 0;
 }

@@ -18,7 +18,7 @@ typedef struct vldt_word {
 void line2word (line_t *list, vldt_word_t **v_head);
 vldt_word_t* create_vldt_word (char word[]);
 void insert_line_element (line_t **list, char line []);
-void print_line (line_t *list);
+void print_text (line_t *list, char pause);
 void imprime (vldt_word_t *list);
 
 #endif
