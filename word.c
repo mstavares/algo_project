@@ -71,33 +71,43 @@ void comma_and_dot (char word [])
     }
 }
 
+
+
+
 // Remove invalid words from list
-/*void invalid_word (vldt_word_t **list)
+int invalid_word (char word [])
 {
-    int tam = 0;
     int i = 0;
-    vldt_word_t *ptr = NULL;
-    for(ptr = *list; ptr; ptr = ptr->next) {
-        tam = strlen(ptr->word)-1;
-        for(i = 0; i < tam; i++) {
-            if(((ptr->word)+i) > 'A' && ((ptr->word)+i) < 'Z') {
-                continue;
-            } else if (((ptr->word)+i) > 'a' && ((ptr->word)+i) < 'a') {
-                continue;
-            } else if (((ptr->word)+i) == '-') {
-                
-            } else {
-                
-            }
+    int tam = strlen(word);
+    for(i = 0; i < tam; i++) {
+        if((word[i] >= 'A') && (word[i] <= 'Z')) {
+            continue;
+        } else if ((word[i] >= 'a') && (word[i] <= 'z')) {
+            continue;
+        } else if (word[i] == '-') {
+            continue;
+        } else {
+            return 1;
         }
     }
-}*/
+    return 0;
+}
 
+/* Check if word is really a word
+ * Call comma_and_dot to remove commas and dots
+ */
 void word_validation (vldt_word_t **list)
 {
-    vldt_word_t *ptr = NULL;
+    vldt_word_t *ptr = NULL, *temp = NULL;
     for(ptr = *list; ptr; ptr = ptr->next) {
         comma_and_dot(ptr->word);
+        if(invalid_word(ptr->word)) {
+            (ptr->prev)->next = ptr->next;
+            (ptr->next)->prev = ptr->prev;
+            temp = ptr;
+            ptr = ptr->prev;
+            free(temp);
+        }
     }
 }
 

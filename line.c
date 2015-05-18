@@ -38,6 +38,7 @@ void line2word (line_t *list, vldt_word_t **v_head)
                 } else {
                     for(v_ptr = *v_head; v_ptr->next; v_ptr = v_ptr->next);
                     v_ptr->next = create_vldt_word (word);
+                    (v_ptr->next)->prev = v_ptr;
                 }
             }
             line += strlen(word)+1;       
@@ -52,6 +53,7 @@ vldt_word_t* create_vldt_word (char word[])
     if (new) {
         strcpy(new->word, word);
         new->next = NULL;
+        new->prev = NULL;
     }    
     return new;
 }

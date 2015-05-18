@@ -13,6 +13,7 @@ typedef struct line {
 typedef struct vldt_word {
     char word [MAX_WORD_LENGTH];
     struct vldt_word *next;
+    struct vldt_word *prev;
 }vldt_word_t;
 
 void line2word (line_t *list, vldt_word_t **v_head);
