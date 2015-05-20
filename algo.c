@@ -10,14 +10,16 @@ void main_menu (word_t *root, line_t *head)
 {
     int option = 0;
     int loop = 1;
+    char word [MAX_WORD_LENGTH];
     while (loop) {
         while(scanf("%*c"));
         puts("Select:");
-        puts("1 - Print text");
-        puts("2 - Print text line by line");
-        puts("3 - Print all words with occurrences");
-        puts("4 - Delete word");
-        puts("9 - Exit");
+        puts("1 - Print text.");
+        puts("2 - Print text line by line.");
+        puts("3 - Print all words with occurrences.");
+        puts("4 - Search word.");
+        puts("5 - Delete word.");
+        puts("9 - Exit.");
         scanf("%d", &option);
         switch (option) {
             case 1:
@@ -31,6 +33,12 @@ void main_menu (word_t *root, line_t *head)
                 print_words(root);
                 break;
             case 4:
+                puts("Write the word who want to search.");
+                scanf("%s", word);
+                user_search(&root, word);
+                break;
+            case 5:
+                
                 break;
             case 9:
                 loop = 0;

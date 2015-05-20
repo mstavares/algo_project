@@ -5,21 +5,40 @@
 #include "word.h"
 
 // Search a word introduced by user
+/*word_t* search_word (word_t **tree, char word [])
+{
+    if (!*tree) {
+        return NULL;
+    } else {
+        int compare_result = strcmp(word, (*tree)->word);
+        if (compare_result == 0) {
+            printf("!!!%p!!!\n", *tree);
+            return *tree;
+        } else if (compare_result > 0) {
+            search_word (&(*tree)->right, word);
+        } else {
+            search_word (&(*tree)->left, word);
+        }
+    }
+}*/
+
 word_t* search_word (word_t **tree, char word [])
 {
-    word_t *ptr = *tree;
+    word_t *ptr = NULL;
     for(;;) {
-        if (!ptr) {
-            printf("entrou\n");
+        if (!*tree) {
             return NULL;
         } else {
-            int compare_result = strcmp(word, ptr->word);
+            int compare_result = strcmp(word, (*tree)->word);
             if (compare_result == 0) {
-                return ptr;
+                printf("!!!%p!!!\n", *tree);
+                return *tree;
             } else if (compare_result > 0) {
-                ptr = ptr->right;
+                //search_word (&(*tree)->right, word);
+                *tree = (*tree)->right;
             } else {
-                ptr = ptr->left;
+                *tree = (*tree)->left;
+                //search_word (&(*tree)->left, word);
             }
         }
     } 
@@ -30,6 +49,7 @@ word_t* search_word (word_t **tree, char word [])
 void user_search (word_t **tree, char word [])
 {
     word_t *result = search_word(&(*tree), word);
+    printf("!!%p!!\n", result);
     if(result) {
         printf("Word: %s - Occurrences: %d\n", result->word, result->counter);
     } else {

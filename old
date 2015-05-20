@@ -1,73 +1,67 @@
+Skip to content
+This repository  
+Explore
+Gist
+Blog
+Help
+@mstavares mstavares
+ 
+ Unwatch 1
+  Star 0
+  Fork 0
+mstavares/algo_project PRIVATE
+ branch: master  algo_project/word.c
+@mstavaresmstavares 2 days ago Validacao de palavras ok
+1 contributor
+RawBlameHistory     124 lines (112 sloc)  2.855 kb
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "line.h"
 #include "word.h"
 
-// Search a word introduced by user
-word_t* search_word (word_t **tree, char word [])
-{
-    word_t *ptr = *tree;
-    for(;;) {
-        if (!ptr) {
-            printf("entrou\n");
-            return NULL;
-        } else {
-            int compare_result = strcmp(word, ptr->word);
-            if (compare_result == 0) {
-                return ptr;
-            } else if (compare_result > 0) {
-                ptr = ptr->right;
-            } else {
-                ptr = ptr->left;
-            }
-        }
-    } 
-}
-
-
-
-void user_search (word_t **tree, char word [])
-{
-    word_t *result = search_word(&(*tree), word);
-    if(result) {
-        printf("Word: %s - Occurrences: %d\n", result->word, result->counter);
-    } else {
-        puts("\nThe word you searched for was not found.\n");
-    }
-}
-
 /* Search one word on tree struct
  * if exist sum 1 to counter variable 
  * else return the address to allocate the new word
  */
-// Gets validated words and inserts them in tree
-word_t* insert_word (word_t **tree, char word [])
+word_t** search_word (word_t *tree, char word []) 
 {
-    if (!*tree) {
-        *tree = create_word(word);
-        return NULL;
-    } else {
-        int compare_result = strcmp(word, (*tree)->word);
+    int compare_result = 0;
+    for (;;) {
+        compare_result = strcmp(word, tree->word);
         if (compare_result == 0) {
-            (*tree)->counter++;
+            tree->counter += 1;
             return NULL;
-        } else if (compare_result > 0) {
-            insert_word (&(*tree)->right, word);
+        } else if(compare_result > 0) {
+            if (!tree->right) {
+                return(&tree->right);
+            } else {
+                tree = tree->right;
+            }
         } else {
-            insert_word (&(*tree)->left, word);
+            if (!tree->left) {
+                return(&tree->left);
+            } else {
+                tree = tree->left;
+            }
         }
     }
-    return NULL;
 }
 
-// Recieve validated words list and insert them on tree
+// Adds word into word list
 void insert_words (word_t **tree, vldt_word_t *list)
 {
     vldt_word_t *ptr = NULL;
     for(ptr = list; ptr; ptr = ptr->next) {
-        insert_word(&(*tree), ptr->word);
-    }
+        if(!*tree) {
+            *tree = create_word(ptr->word);
+        } else {
+            word_t **new = (search_word(*tree, ptr->word));
+            if (new) {
+                *new = create_word(ptr->word);
+            }
+        }
+    }        
 }
 
 // Allocates memory for a new word
@@ -92,6 +86,9 @@ void comma_and_dot (char word [])
         word[tam] = '\0';
     }
 }
+
+
+
 
 // Remove invalid words from list
 int invalid_word (char word [])
@@ -136,7 +133,9 @@ void print_words (word_t *list)
     if (!list)
         return;
     print_words(list->left);
-    printf("Word: %s - Occurrences: %d : %p\n", list->word, list->counter, list);
+    printf("Word: %s - Occurrences: %d\n", list->word, list->counter);
     print_words(list->right);
 }
 
+Status API Training Shop Blog About
+© 2015 GitHub, Inc. Terms Privacy Security Contact
