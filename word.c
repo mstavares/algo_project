@@ -5,36 +5,28 @@
 #include "word.h"
 
 // Search a word introduced by user
-word_t* search_word (word_t **tree, char word [])
+word_t* search_word (word_t *tree, char word [])
 {
-    word_t *ptr = *tree;
-    for(;;) {
-        if (!ptr) {
-            printf("entrou\n");
-            return NULL;
-        } else {
-            int compare_result = strcmp(word, ptr->word);
-            if (compare_result == 0) {
-                return ptr;
-            } else if (compare_result > 0) {
-                ptr = ptr->right;
-            } else {
-                ptr = ptr->left;
-            }
-        }
-    } 
+    word_t *ptr = NULL;
+    for(ptr = tree; ptr;) {
+        int compare_result = strcmp(word, ptr->word);
+        if (compare_result == 0)
+            return ptr;
+        else if (compare_result > 0)
+            ptr = ptr->right;
+        else
+            ptr = ptr->left;
+    }  
+    return NULL;
 }
 
-
-
-void user_search (word_t **tree, char word [])
+void user_search (word_t *tree, char word [])
 {
-    word_t *result = search_word(&(*tree), word);
-    if(result) {
+    word_t *result = search_word(tree, word);
+    if(result)
         printf("Word: %s - Occurrences: %d\n", result->word, result->counter);
-    } else {
+    else
         puts("\nThe word you searched for was not found.\n");
-    }
 }
 
 /* Search one word on tree struct
@@ -42,23 +34,20 @@ void user_search (word_t **tree, char word [])
  * else return the address to allocate the new word
  */
 // Gets validated words and inserts them in tree
-word_t* insert_word (word_t **tree, char word [])
+//word_t* insert_word (word_t **tree, char word [])
+void insert_word (word_t **tree, char word [])
 {
-    if (!*tree) {
+    if(!*tree)
         *tree = create_word(word);
-        return NULL;
-    } else {
+    else {
         int compare_result = strcmp(word, (*tree)->word);
-        if (compare_result == 0) {
+        if (compare_result == 0)
             (*tree)->counter++;
-            return NULL;
-        } else if (compare_result > 0) {
+        else if (compare_result > 0)
             insert_word (&(*tree)->right, word);
-        } else {
+        else
             insert_word (&(*tree)->left, word);
-        }
     }
-    return NULL;
 }
 
 // Recieve validated words list and insert them on tree
@@ -80,6 +69,7 @@ word_t* create_word (char word [])
         new->right = NULL;
         new->left = NULL;
     }
+    printf("!!!%p!!!\n", new);
     return new;
 }
 
@@ -139,4 +129,3 @@ void print_words (word_t *list)
     printf("Word: %s - Occurrences: %d : %p\n", list->word, list->counter, list);
     print_words(list->right);
 }
-

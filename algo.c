@@ -35,7 +35,7 @@ void main_menu (word_t *root, line_t *head)
             case 4:
                 puts("Write the word who want to search.");
                 scanf("%s", word);
-                user_search(&root, word);
+                user_search(root, word);
                 break;
             case 5:
                 

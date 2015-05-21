@@ -10,13 +10,16 @@ typedef struct word {
     struct word *left;
 }word_t;
 
-void user_search (word_t **tree, char word []);
+void user_search (word_t *tree, char word []);
+word_t* search_word (word_t *tree, char word []);
+//word_t* insert_word (word_t **tree, char word []);
 
-word_t* search_word (word_t **tree, char word []);
-word_t* insert_word (word_t **tree, char word []);
-
+void insert_word (word_t **tree, char word []);
 
 void insert_words (word_t **tree, vldt_word_t *list);
+
+
+
 word_t* create_word (char word []);
 void comma_and_dot (char word []);
 int invalid_word (char word []);
