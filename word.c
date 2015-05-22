@@ -29,24 +29,37 @@ void user_search (word_t *tree, char word [])
         puts("\nThe word you searched for was not found.\n");
 }
 
+// Checks if the right or left is free to enter the new word
+void left_right (word_t **pos, char word [], word_t **ptr)
+{
+    if(*pos)
+        *ptr = *pos;
+    else {
+        *pos = create_word(word);
+        *ptr = NULL;
+    }
+}
+
 /* Search one word on tree struct
  * if exist sum 1 to counter variable 
  * else return the address to allocate the new word
  */
 // Gets validated words and inserts them in tree
-//word_t* insert_word (word_t **tree, char word [])
 void insert_word (word_t **tree, char word [])
 {
-    if(!*tree)
+    word_t *ptr = NULL;
+    int compare_result = 0;
+    if(!*tree) {
         *tree = create_word(word);
-    else {
-        int compare_result = strcmp(word, (*tree)->word);
-        if (compare_result == 0)
-            (*tree)->counter++;
-        else if (compare_result > 0)
-            insert_word (&(*tree)->right, word);
-        else
-            insert_word (&(*tree)->left, word);
+    } else {
+        for(ptr = *tree; ptr;){
+            compare_result = strcmp(word, ptr->word);
+            if(compare_result == 0) {
+                ptr->counter++;
+                break;
+            }
+            compare_result > 0 ? left_right(&ptr->right, word, &ptr) : left_right(&ptr->left, word, &ptr);
+        }
     }
 }
 
@@ -54,9 +67,8 @@ void insert_word (word_t **tree, char word [])
 void insert_words (word_t **tree, vldt_word_t *list)
 {
     vldt_word_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next) {
+    for(ptr = list; ptr; ptr = ptr->next)
         insert_word(&(*tree), ptr->word);
-    }
 }
 
 // Allocates memory for a new word
@@ -69,7 +81,6 @@ word_t* create_word (char word [])
         new->right = NULL;
         new->left = NULL;
     }
-    printf("!!!%p!!!\n", new);
     return new;
 }
 
@@ -77,10 +88,8 @@ word_t* create_word (char word [])
 void comma_and_dot (char word [])
 {
     int tam = strlen(word)-1;
-    char symbols [] = {',', '.'};
-    if(word[tam] == symbols[0] || word[tam] == symbols[1]) {
+    if(word[tam] == ',' || word[tam] == '.')
         word[tam] = '\0';
-    }
 }
 
 // Remove invalid words from list
@@ -89,15 +98,14 @@ int invalid_word (char word [])
     int i = 0;
     int tam = strlen(word);
     for(i = 0; i < tam; i++) {
-        if((word[i] >= 'A') && (word[i] <= 'Z')) {
+        if((word[i] >= 'A') && (word[i] <= 'Z'))
             continue;
-        } else if ((word[i] >= 'a') && (word[i] <= 'z')) {
+        else if ((word[i] >= 'a') && (word[i] <= 'z'))
             continue;
-        } else if (word[i] == '-') {
+        else if (word[i] == '-')
             continue;
-        } else {
+        else
             return 1;
-        }
     }
     return 0;
 }
@@ -123,9 +131,9 @@ void word_validation (vldt_word_t **list)
 // Print words list
 void print_words (word_t *list)
 {
-    if (!list)
-        return;
-    print_words(list->left);
-    printf("Word: %s - Occurrences: %d : %p\n", list->word, list->counter, list);
-    print_words(list->right);
+    if (list) {
+        print_words(list->left);
+        printf("Word: %s - Occurrences: %d\n", list->word, list->counter);
+        print_words(list->right);
+    }
 }

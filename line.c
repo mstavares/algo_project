@@ -67,8 +67,7 @@ void print_text (line_t *list, char pause)
     line_t *ptr = NULL;
     for(ptr = list; ptr; ptr = ptr->next) {
         printf("%s\n", ptr->line);
-        if(pause) {
+        if(pause)
             getchar();
-        }
     }
 }
