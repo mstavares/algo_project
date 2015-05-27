@@ -29,38 +29,24 @@ void user_search (word_t *tree, char word [])
         puts("\nThe word you searched for was not found.\n");
 }
 
-// Checks if the right or left is free to enter the new word
-void left_right (word_t **pos, char word [], word_t **ptr)
-{
-    if(*pos)
-        *ptr = *pos;
-    else {
-        *pos = create_word(word);
-        *ptr = NULL;
-    }
-}
-
-/* Search one word on tree struct
- * if exist sum 1 to counter variable 
- * else return the address to allocate the new word
- */
 // Gets validated words and inserts them in tree
 void insert_word (word_t **tree, char word [])
 {
-    word_t *ptr = NULL;
+    word_t **ptr = NULL;
     int compare_result = 0;
-    if(!*tree) {
-        *tree = create_word(word);
-    } else {
-        for(ptr = *tree; ptr;){
-            compare_result = strcmp(word, ptr->word);
+        for(ptr = tree; *ptr;){
+            compare_result = strcmp(word, (*ptr)->word);
             if(compare_result == 0) {
-                ptr->counter++;
+                (*ptr)->counter++;
                 break;
             }
-            compare_result > 0 ? left_right(&ptr->right, word, &ptr) : left_right(&ptr->left, word, &ptr);
+            else if (compare_result > 0)
+                ptr = &(*ptr)->right;
+            else
+                ptr = &(*ptr)->left; 
         }
-    }
+    if(!*ptr)
+        *ptr = create_word(word);
 }
 
 // Recieve validated words list and insert them on tree

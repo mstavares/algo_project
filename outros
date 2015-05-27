@@ -1,8 +1,0 @@
-  public TN locate (TN root, int toFind)
-  {
-    for (TN c=root; c!=null; c = toFind<c.value ? c.left : c.right)
-      if (toFind == c.value)
-        return c;
-
-    return null;
-  }

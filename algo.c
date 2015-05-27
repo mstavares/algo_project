@@ -81,7 +81,6 @@ int main ()
         line2word(head, &v_head);
         word_validation(&v_head);
         insert_words(&root, v_head);
-        //insert_words(root, v_head);
         main_menu(root, head);
     }
     printf("\n");
