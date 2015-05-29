@@ -2,43 +2,49 @@
 #include <stdlib.h>
 #include <string.h>
 #include "line.h"
+#include "tree_of_strings.h"
 #include "word.h"
+#include "meaning.h"
 #include "algo.h"
 
 // Main menu
-void main_menu (word_t *root, line_t *head) 
+void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t *head_lines) 
 {
     int option = 0;
     int loop = 1;
-    char word [MAX_WORD_LENGTH];
     while (loop) {
-        while(scanf("%*c"));
         puts("Select:");
         puts("1 - Print text.");
         puts("2 - Print text line by line.");
         puts("3 - Print all words with occurrences.");
         puts("4 - Search word.");
-        puts("5 - Delete word.");
+        puts("5 - cria");
+        puts("6 - adiciona");
+        puts("7 - imprime");
         puts("9 - Exit.");
         scanf("%d", &option);
+        while(scanf("%*c"));
         switch (option) {
             case 1:
-                print_text(head, 0);
+                print_text(head_lines, 0);
                 break;
             case 2:
-                while(scanf("%*c"));
-                print_text(head, 1);
+                print_text(head_lines, 1);
                 break;
             case 3:
-                print_words(root);
+                print_strings(head_words, 1);
                 break;
             case 4:
-                puts("Write the word who want to search.");
-                scanf("%s", word);
-                user_search(root, word);
+                user_search(head_words);
                 break;
             case 5:
-                
+                create_meaning(&head_meanings);
+                break;
+            case 6:
+                insert_word_meaning(&head_meanings);
+                break;
+            case 7:
+                print_meanings(head_meanings);
                 break;
             case 9:
                 loop = 0;
@@ -59,9 +65,10 @@ void extension (char filename []) {
 
 int main () 
 {
-    word_t *root = NULL;
-    vldt_word_t *v_head = NULL;
-    line_t *head = NULL;
+    tree_of_strings_t *head_words = NULL;
+    meaning_t *head_meanings = NULL;
+    vldt_word_t *vldt_head = NULL;
+    line_t *head_lines = NULL;
     char filename [MAX_FILENAME_LENGTH];
     char line [MAX_LINE_LENGTH];
 	puts("Type filename to be read.");
@@ -76,12 +83,12 @@ int main ()
             if(line[(strlen(line)-1)] == '\n') {
                 line[(strlen(line)-1)] = '\0';
             }
-            insert_line_element(&head, line);
+            insert_line_element(&head_lines, line);
         }
-        line2word(head, &v_head);
-        word_validation(&v_head);
-        insert_words(&root, v_head);
-        main_menu(root, head);
+        line2word(head_lines, &vldt_head);
+        word_validation(&vldt_head);
+        insert_strings(&head_words, vldt_head);
+        main_menu(head_words, head_meanings, head_lines);
     }
     printf("\n");
     puts("See ya");

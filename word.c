@@ -2,80 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include "line.h"
+#include "tree_of_strings.h"
 #include "word.h"
 
-// Search a word introduced by user
-word_t* search_word (word_t *tree, char word [])
+// Search word introduced by user
+void user_search (tree_of_strings_t *tree)
 {
-    word_t *ptr = NULL;
-    for(ptr = tree; ptr;) {
-        int compare_result = strcmp(word, ptr->word);
-        if (compare_result == 0)
-            return ptr;
-        else if (compare_result > 0)
-            ptr = ptr->right;
-        else
-            ptr = ptr->left;
-    }  
-    return NULL;
-}
-
-void user_search (word_t *tree, char word [])
-{
-    word_t *result = search_word(tree, word);
+    char word [MAX_WORD_LENGTH];
+    puts("Write the word who want to search.");
+    scanf("%s", word);
+    tree_of_strings_t *result = search_string(tree, word);
     if(result)
-        printf("Word: %s - Occurrences: %d\n", result->word, result->counter);
+        printf("Word: %s - Occurrences: %d\n", result->string, result->counter);
     else
         puts("\nThe word you searched for was not found.\n");
-}
-
-// Gets validated words and inserts them in tree
-void insert_word (word_t **tree, char word [])
-{
-    word_t **ptr = NULL;
-    int compare_result = 0;
-        for(ptr = tree; *ptr;){
-            compare_result = strcmp(word, (*ptr)->word);
-            if(compare_result == 0) {
-                (*ptr)->counter++;
-                break;
-            }
-            else if (compare_result > 0)
-                ptr = &(*ptr)->right;
-            else
-                ptr = &(*ptr)->left; 
-        }
-    if(!*ptr)
-        *ptr = create_word(word);
-}
-
-// Recieve validated words list and insert them on tree
-void insert_words (word_t **tree, vldt_word_t *list)
-{
-    vldt_word_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next)
-        insert_word(&(*tree), ptr->word);
-}
-
-// Allocates memory for a new word
-word_t* create_word (char word [])
-{
-    word_t *new = (word_t*) malloc (sizeof(word_t));
-    if (new) {
-        strcpy(new->word, word);
-        new->counter = 1;
-        new->right = NULL;
-        new->left = NULL;
-    }
-    return new;
 }
 
 // Remove comma and dot from word
 void comma_and_dot (char word [])
 {
+    int i = 0;
     int tam = strlen(word)-1;
-    if(word[tam] == ',' || word[tam] == '.')
-        word[tam] = '\0';
+    char symbols [6] = {',', '.', ';', ':', '!', '?'};
+    for(i = 0; i <= 6; i++)
+        if(word[tam] == symbols[i])
+            word[tam] = '\0';
 }
 
 // Remove invalid words from list
@@ -111,15 +62,5 @@ void word_validation (vldt_word_t **list)
             ptr = ptr->prev;
             free(temp);
         }
-    }
-}
-
-// Print words list
-void print_words (word_t *list)
-{
-    if (list) {
-        print_words(list->left);
-        printf("Word: %s - Occurrences: %d\n", list->word, list->counter);
-        print_words(list->right);
     }
 }
