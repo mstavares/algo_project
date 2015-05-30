@@ -13,7 +13,8 @@ typedef struct meaning {
 meaning_t* create_meaning_element (char meaning []);
 void create_meaning (meaning_t **meaning_list);
 meaning_t* search_meaning (meaning_t *meaning_list, char meaning []);
-void insert_word_meaning (meaning_t **meaning_list);
+void insert_remove_meaning_word (meaning_t **meaning_list, void (*insert_remove) ());
 void print_meanings (meaning_t *meaning_list);
+void insert_meaning_word (meaning_t **meaning);
 
 #endif

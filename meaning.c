@@ -51,24 +51,38 @@ meaning_t* search_meaning (meaning_t *meaning_list, char meaning [])
     return NULL;
 }
 
-void insert_word_meaning (meaning_t **meaning_list)
+void insert_meaning_word (meaning_t **meaning) 
 {
-    char string [MAX_WORD_LENGTH];
-    meaning_t *meaning = NULL;
+    char word [MAX_WORD_LENGTH];
+    puts("Type the word you want to insert.");
+    scanf("%s", word);
+    insert_string(&(*meaning)->data, word);
+}
+
+/*
+void remove_word_meaning (meaning_t **meaning_list)
+{
+    
+}
+*/
+void insert_remove_meaning_word (meaning_t **meaning_list, void (*insert_remove) ())
+{
+    char meaning [MAX_WORD_LENGTH];
+    meaning_t *meaning_ptr = NULL;
     puts("Type the meaning you want to search.");
-    scanf("%s", string);
+    scanf("%s", meaning);
     while(scanf("%*c"));
-    meaning = search_meaning(*meaning_list, string);
-    if(meaning) {
-        if(!search_string(meaning->data, string)) {
-            puts("Type the word you want to insert.");
-            scanf("%s", string);
-            insert_string(&meaning->data ,string);
+    meaning_ptr = search_meaning(*meaning_list, meaning);
+    if(meaning_ptr) {
+        if(!search_string(meaning_ptr->data, meaning)) {
+           insert_remove(&meaning_ptr);
         } 
     }
     else
         puts("The meaning searched could not be found.");
 }
+
+
 
 void print_meanings (meaning_t *meaning_list)
 {
@@ -76,8 +90,9 @@ void print_meanings (meaning_t *meaning_list)
     if(meaning_list) {
         for(ptr = meaning_list; ptr; ptr = ptr->next) {
             puts(ptr->description);
-            printf("-----\n");
+            puts("++++++++++");
             print_strings(ptr->data, 0);
+            puts("----------");
         }
     }
 }

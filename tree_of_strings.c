@@ -62,14 +62,24 @@ tree_of_strings_t* create_string_element (char word [])
 }
 
 // Print strings tree
-void print_strings (tree_of_strings_t *list, int ocurrences)
+void print_strings (tree_of_strings_t *tree, int ocurrences)
 {
-    if (list) {
-        print_strings(list->left, ocurrences);
-        printf("Word: %s ", list->string);
+    if (tree) {
+        print_strings(tree->left, ocurrences);
+        printf("Word: %s ", tree->string);
         if(ocurrences)
-            printf("- Occurrences: %d",list->counter);
+            printf("- Occurrences: %d",tree->counter);
         printf("\n");
-        print_strings(list->right, ocurrences);
+        print_strings(tree->right, ocurrences);
+    }
+}
+
+void delete_strings (tree_of_strings_t **tree)
+{
+    if(*tree) {
+        delete_strings(&(*tree)->left);
+        free(*tree);
+        delete_strings(&(*tree)->right);
+        *tree = NULL;
     }
 }

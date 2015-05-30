@@ -21,6 +21,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
         puts("5 - cria");
         puts("6 - adiciona");
         puts("7 - imprime");
+        puts("8 - elimina");
         puts("9 - Exit.");
         scanf("%d", &option);
         while(scanf("%*c"));
@@ -41,10 +42,13 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 create_meaning(&head_meanings);
                 break;
             case 6:
-                insert_word_meaning(&head_meanings);
+                insert_remove_meaning_word(&head_meanings, insert_meaning_word);
                 break;
             case 7:
                 print_meanings(head_meanings);
+                break;
+            case 8:
+                delete_strings(&head_words);
                 break;
             case 9:
                 loop = 0;
