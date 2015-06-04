@@ -60,7 +60,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
             	scanf("%s", teste);
             	tree_of_strings_t *palavra = search_string(head_words, teste);
             	if(palavra)
-            		delete_string(head_words, teste);
+            		delete_string(head_words, palavra);
             	
                 break;
             case 0:
