@@ -6,7 +6,7 @@
 // Insert line on list by read order
 void insert_line_element (line_t **list, char line [])
 {
-    line_t *ptr = NULL;
+    line_t *temp = NULL;
     line_t *new = (line_t*) malloc (sizeof(line_t));
     if (new) {
         strcpy(new->line, line);
@@ -14,8 +14,8 @@ void insert_line_element (line_t **list, char line [])
         if (!*list) {
             *list = new;
         } else {
-            for (ptr = *list; ptr->next; ptr = ptr->next);
-            ptr->next = new;
+            for (temp = *list; temp->next; temp = temp->next);
+            temp->next = new;
         } 
     }
 }
@@ -24,11 +24,11 @@ void insert_line_element (line_t **list, char line [])
 void line2word (line_t *list, vldt_word_t **v_head)
 {
     int i = 0;
-    line_t *ptr = NULL;
-    vldt_word_t *v_ptr = NULL;
+    line_t *temp = NULL;
+    vldt_word_t *v_temp = NULL;
     char word [MAX_WORD_LENGTH];
-    for(ptr = list; ptr; ptr = ptr->next) {
-        char *line = ptr->line;    
+    for(temp = list; temp; temp = temp->next) {
+        char *line = temp->line;    
         do {
             sscanf(line, "%s", word);
             i = strlen(line) - strlen(word);
@@ -36,9 +36,9 @@ void line2word (line_t *list, vldt_word_t **v_head)
                 if(!*v_head) {
                     *v_head = create_vldt_word (word);
                 } else {
-                    for(v_ptr = *v_head; v_ptr->next; v_ptr = v_ptr->next);
-                    v_ptr->next = create_vldt_word (word);
-                    (v_ptr->next)->prev = v_ptr;
+                    for(v_temp = *v_head; v_temp->next; v_temp = v_temp->next);
+                    v_temp->next = create_vldt_word (word);
+                    (v_temp->next)->prev = v_temp;
                 }
             }
             line += strlen(word)+1;       
@@ -64,9 +64,9 @@ vldt_word_t* create_vldt_word (char word[])
  */
 void print_text (line_t *list, char pause)
 {
-    line_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next) {
-        printf("%s\n", ptr->line);
+    line_t *temp = NULL;
+    for(temp = list; temp; temp = temp->next) {
+        printf("%s\n", temp->line);
         if(pause)
             getchar();
     }

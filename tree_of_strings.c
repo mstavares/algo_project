@@ -7,15 +7,15 @@
 // Search a string introduced by user
 tree_of_strings_t* search_string (tree_of_strings_t *tree, char word [])
 {
-    tree_of_strings_t *ptr = NULL;
-    for(ptr = tree; ptr;) {
-        int compare_result = strcmp(word, ptr->string);
+    tree_of_strings_t *temp = NULL;
+    for(temp = tree; temp;) {
+        int compare_result = strcmp(word, temp->string);
         if (compare_result == 0)
-            return ptr;
+            return temp;
         else if (compare_result > 0)
-            ptr = ptr->right;
+            temp = temp->right;
         else
-            ptr = ptr->left;
+            temp = temp->left;
     }  
     return NULL;
 }
@@ -23,29 +23,29 @@ tree_of_strings_t* search_string (tree_of_strings_t *tree, char word [])
 // Gets validated words and inserts them in tree
 void insert_string (tree_of_strings_t **tree, char word [])
 {
-    tree_of_strings_t **ptr = NULL;
+    tree_of_strings_t **temp = NULL;
     int compare_result = 0;
-        for(ptr = tree; *ptr;){
-            compare_result = strcmp(word, (*ptr)->string);
+        for(temp = tree; *temp;){
+            compare_result = strcmp(word, (*temp)->string);
             if(compare_result == 0) {
-                (*ptr)->counter++;
+                (*temp)->counter++;
                 break;
             }
             else if (compare_result > 0)
-                ptr = &(*ptr)->right;
+                temp = &(*temp)->right;
             else
-                ptr = &(*ptr)->left; 
+                temp = &(*temp)->left; 
         }
-    if(!*ptr)
-        *ptr = create_string_element(word);
+    if(!*temp)
+        *temp = create_string_element(word);
 }
 
 // Loop to insert validated strings list
 void insert_strings (tree_of_strings_t **tree, vldt_word_t *list)
 {
-    vldt_word_t *ptr = NULL;
-    for(ptr = list; ptr; ptr = ptr->next)
-        insert_string(&(*tree), ptr->word);
+    vldt_word_t *temp = NULL;
+    for(temp = list; temp; temp = temp->next)
+        insert_string(&(*tree), temp->word);
 }
 
 // Allocates memory for a new string
@@ -85,40 +85,36 @@ void delete_strings (tree_of_strings_t **tree)
     }
 }
 
-// Find minimum
-tree_of_strings_t* find_min (tree_of_strings_t *tree)
+/* Delete string
+ * Without leafs
+ * Just one leaf
+ * Two leafs
+ */
+tree_of_strings_t* delete_string (tree_of_strings_t **tree, char to_remove [])
 {
-	tree_of_strings_t* ptr = NULL;
-	for(ptr = tree; ptr->left; ptr = ptr->left);
-	return ptr;
-}
-
-// Delete string
-tree_of_strings_t* delete_string (tree_of_strings_t *tree, char to_remove [])
-{
-	if (!tree)
-		return NULL;
-	else if (strcmp(to_remove, tree->string) > 0)
-		tree->right = delete_string(tree->right, to_remove);
-	else if (strcmp(to_remove, tree->string) < 0)
-		tree->left = delete_string(tree->left, to_remove);
-	else {
-		if(tree->left == NULL && tree->right == NULL) {
-			free(tree);
-			tree = NULL;
-		} else if (!tree->left) {
-			tree_of_strings_t *temp = tree;
-			tree = tree->right;
-			free(temp);
-		} else if (!tree->right) {
-			tree_of_strings_t *temp = tree;
-			tree = tree->left;
-			free(temp);
-		} else {
-			tree_of_strings_t *temp = find_min(tree);
-			strcpy(tree->string, temp->string);
-			tree->right = delete_string(tree->right, temp->string);
-		}
+    if (*tree) {
+        tree_of_strings_t *temp = *tree;
+	    if (strcmp(to_remove, (*tree)->string) > 0)
+		    (*tree)->right = delete_string(&(*tree)->right, to_remove);
+	    else if (strcmp(to_remove, (*tree)->string) < 0)
+		    (*tree)->left = delete_string(&(*tree)->left, to_remove);
+	    else {
+		    if(!(*tree)->left && !(*tree)->right) {
+                *tree = NULL;
+                free(*tree);
+		    } else if (!(*tree)->left) {
+                free(*tree);
+			    *tree = (*tree)->right;
+		    } else if (!(*tree)->right) {
+                free(*tree);
+			    *tree = (*tree)->left;
+		    } else {
+                for(temp = (*tree)->right; temp->left; temp = temp->left);
+			    strcpy((*tree)->string, temp->string);
+			    (*tree)->right = delete_string(&(*tree)->right, temp->string);
+		    }
+            return NULL;
+        }
 	}
-	return tree;
+    return *tree;
 }

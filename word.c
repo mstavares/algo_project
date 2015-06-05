@@ -6,7 +6,7 @@
 #include "word.h"
 
 // Search word introduced by user
-void user_search (tree_of_strings_t *tree)
+void word_search (tree_of_strings_t *tree)
 {
     char word [MAX_WORD_LENGTH];
     puts("Write the word who want to search.");

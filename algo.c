@@ -11,10 +11,7 @@
 void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t *head_lines) 
 {
     int option = 0;
-    int loop = 1;
-    
-    char teste [10];
-    
+    int loop = 1;   
     while (loop) {
         puts("Select:");
         puts("1 - Print text.");
@@ -40,7 +37,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 print_strings(head_words, 1);
                 break;
             case 4:
-                user_search(head_words);
+                word_search(head_words);
                 break;
             case 5:
                 create_meaning(&head_meanings);
@@ -55,13 +52,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 delete_strings(&head_words);
                 break;
             case 9:
-            	
-            	puts("palavra");
-            	scanf("%s", teste);
-            	tree_of_strings_t *palavra = search_string(head_words, teste);
-            	if(palavra)
-            		delete_string(head_words, teste);
-            	
+            	meaning_search_delete(&head_words);            	
                 break;
             case 0:
                 loop = 0;

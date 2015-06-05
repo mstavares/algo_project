@@ -16,5 +16,6 @@ meaning_t* search_meaning (meaning_t *meaning_list, char meaning []);
 void insert_remove_meaning_word (meaning_t **meaning_list, void (*insert_remove) ());
 void print_meanings (meaning_t *meaning_list);
 void insert_meaning_word (meaning_t **meaning);
+void meaning_search_delete (tree_of_strings_t **tree);
 
 #endif
