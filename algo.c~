@@ -11,21 +11,19 @@
 void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t *head_lines) 
 {
     int option = 0;
-    int loop = 1;
-    
-    char teste [10];
-    
+    int loop = 1;   
     while (loop) {
         puts("Select:");
         puts("1 - Print text.");
         puts("2 - Print text line by line.");
         puts("3 - Print all words with occurrences.");
         puts("4 - Search word.");
-        puts("5 - cria");
-        puts("6 - adiciona");
-        puts("7 - imprime");
-        puts("8 - elimina");
-        puts("9 - teste");
+        puts("5 - Create meaning list.");
+        puts("6 - Add meaning to list");
+        puts("7 - Print meanings.");
+        puts("8 - Delete meanings list.");
+        puts("9 - Delete meaning from list.");
+        puts("10 - Teste.");
         puts("0 - Exit.");
         scanf("%d", &option);
         while(scanf("%*c"));
@@ -40,28 +38,22 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 print_strings(head_words, 1);
                 break;
             case 4:
-                user_search(head_words);
+                word_search(head_words);
                 break;
             case 5:
                 create_meaning(&head_meanings);
                 break;
             case 6:
-                insert_remove_meaning_word(&head_meanings, insert_meaning_word);
+                insert_meaning(&head_meanings);
                 break;
             case 7:
                 print_meanings(head_meanings);
                 break;
             case 8:
-                delete_strings(&head_words);
+                delete_tree(&head_words);
                 break;
             case 9:
-            	
-            	puts("palavra");
-            	scanf("%s", teste);
-            	tree_of_strings_t *palavra = search_string(head_words, teste);
-            	if(palavra)
-            		delete_string(head_words, palavra);
-            	
+            	meaning_search_delete(&head_words);            	
                 break;
             case 0:
                 loop = 0;
@@ -86,11 +78,19 @@ int main ()
     meaning_t *head_meanings = NULL;
     vldt_word_t *vldt_head = NULL;
     line_t *head_lines = NULL;
+    
     char filename [MAX_FILENAME_LENGTH];
+    
+    //char meanings_filename [MAX_FILENAME_LENGTH];
+    
     char line [MAX_LINE_LENGTH];
+    
 	puts("Type filename to be read.");
     scanf("%s", filename);
     extension(filename);
+    
+    
+    
     FILE *handle = fopen(filename, "r");
     if (!handle) {
         puts("The specified file was not found.");
@@ -107,6 +107,12 @@ int main ()
         insert_strings(&head_words, vldt_head);
         main_menu(head_words, head_meanings, head_lines);
     }
+    
+    
+    
+    
+    
+    
     printf("\n");
     puts("See ya");
     return 0;

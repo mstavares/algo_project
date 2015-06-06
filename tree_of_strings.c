@@ -75,12 +75,12 @@ void print_strings (tree_of_strings_t *tree, int ocurrences)
 }
 
 // Delete all tree struct
-void delete_strings (tree_of_strings_t **tree)
+void delete_tree (tree_of_strings_t **tree)
 {
     if(*tree) {
-        delete_strings(&(*tree)->left);
+        delete_tree(&(*tree)->left);
         free(*tree);
-        delete_strings(&(*tree)->right);
+        delete_tree(&(*tree)->right);
         *tree = NULL;
     }
 }
