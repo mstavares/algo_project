@@ -54,7 +54,7 @@ tree_of_strings_t* create_string_element (char word [])
     tree_of_strings_t *new = (tree_of_strings_t*) malloc (sizeof(tree_of_strings_t));
     if (new) {
         strcpy(new->string, word);
-        new->counter = 1;
+        new->counter = 0;
         new->right = NULL;
         new->left = NULL;
     }

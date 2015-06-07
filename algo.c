@@ -47,6 +47,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 insert_meaning(&head_meanings);
                 break;
             case 7:
+            	update1(head_meanings, head_words);
                 print_meanings(head_meanings);
                 break;
             case 8:
@@ -54,6 +55,9 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 break;
             case 9:
             	meaning_search_delete(&head_words);            	
+                break;
+            case 10:
+            	update1(head_meanings, head_words);            	
                 break;
             case 0:
                 loop = 0;

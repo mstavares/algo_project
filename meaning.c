@@ -72,7 +72,6 @@ void insert_meaning (meaning_t **meaning_list)
             puts("Type the word you want to insert.");
             scanf("%s", string);
             insert_string(&meaning->data ,string);
-            meaning->counter++;
         } 
     }
     else
@@ -86,8 +85,47 @@ void print_meanings (meaning_t *meaning_list)
         for(temp = meaning_list; temp; temp = temp->next) {
             puts(temp->description);
             puts("++++++++++");
-            print_strings(temp->data, 0);
+            print_strings(temp->data, 1);
             puts("----------");
         }
     }
 }
+
+void clear (tree_of_strings_t *tree_meanings)
+{
+	if(tree_meanings) {
+		clear(tree_meanings->left);
+		tree_meanings->counter = 0;
+		clear(tree_meanings->right);
+	}
+}
+
+void update2 (meaning_t *head_meanings, char word [])
+{
+	meaning_t *temp = NULL;
+	tree_of_strings_t *result = NULL;
+	for(temp = head_meanings; temp; temp = temp->next) {
+		clear(temp->data);
+		result = search_string(temp->data, word);
+		if(result) {
+			puts("encontrei!!");
+			break;
+		}				
+	}
+}
+
+void update1 (meaning_t *head_meanings, tree_of_strings_t *list_words)
+{
+	if(list_words) {
+		update1(head_meanings, list_words->left);
+		update2(head_meanings, list_words->string);
+		update1(head_meanings, list_words->right);
+	}
+}
+
+
+
+
+
+
+

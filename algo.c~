@@ -47,6 +47,7 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 insert_meaning(&head_meanings);
                 break;
             case 7:
+            	update1(head_meanings, head_words);
                 print_meanings(head_meanings);
                 break;
             case 8:
@@ -54,6 +55,9 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 break;
             case 9:
             	meaning_search_delete(&head_words);            	
+                break;
+            case 10:
+            	update1(head_meanings, head_words);            	
                 break;
             case 0:
                 loop = 0;
@@ -78,19 +82,11 @@ int main ()
     meaning_t *head_meanings = NULL;
     vldt_word_t *vldt_head = NULL;
     line_t *head_lines = NULL;
-    
     char filename [MAX_FILENAME_LENGTH];
-    
-    //char meanings_filename [MAX_FILENAME_LENGTH];
-    
     char line [MAX_LINE_LENGTH];
-    
 	puts("Type filename to be read.");
     scanf("%s", filename);
     extension(filename);
-    
-    
-    
     FILE *handle = fopen(filename, "r");
     if (!handle) {
         puts("The specified file was not found.");
@@ -107,12 +103,6 @@ int main ()
         insert_strings(&head_words, vldt_head);
         main_menu(head_words, head_meanings, head_lines);
     }
-    
-    
-    
-    
-    
-    
     printf("\n");
     puts("See ya");
     return 0;
