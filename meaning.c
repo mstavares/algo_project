@@ -83,43 +83,49 @@ void print_meanings (meaning_t *meaning_list)
     meaning_t *temp = NULL;
     if(meaning_list) {
         for(temp = meaning_list; temp; temp = temp->next) {
+            puts("-----------");
             puts(temp->description);
-            puts("++++++++++");
+            puts("-----------");
             print_strings(temp->data, 1);
-            puts("----------");
+            puts("-----------\n");
         }
     }
 }
 
-void clear (tree_of_strings_t *tree_meanings)
+void clear2 (tree_of_strings_t *tree_meanings)
 {
 	if(tree_meanings) {
-		clear(tree_meanings->left);
+		clear2(tree_meanings->left);
 		tree_meanings->counter = 0;
-		clear(tree_meanings->right);
+		clear2(tree_meanings->right);
 	}
 }
 
-void update2 (meaning_t *head_meanings, char word [])
+void clear (meaning_t *head_meanings)
+{
+    meaning_t *temp = NULL;
+    for(temp = head_meanings; temp; temp = temp->next)
+        clear2(temp->data);
+}
+
+void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 {
 	meaning_t *temp = NULL;
 	tree_of_strings_t *result = NULL;
-	for(temp = head_meanings; temp; temp = temp->next) {
-		clear(temp->data);
-		result = search_string(temp->data, word);
+    for(temp = head_meanings; temp; temp = temp->next) {
+		result = search_string(temp->data, word->string);
 		if(result) {
-			puts("encontrei!!");
-			break;
+			result->counter = word->counter;
 		}				
 	}
 }
 
-void update1 (meaning_t *head_meanings, tree_of_strings_t *list_words)
+void update (meaning_t *head_meanings, tree_of_strings_t *list_words)
 {
 	if(list_words) {
-		update1(head_meanings, list_words->left);
-		update2(head_meanings, list_words->string);
-		update1(head_meanings, list_words->right);
+		update(head_meanings, list_words->left);
+		update2(head_meanings, list_words);
+		update(head_meanings, list_words->right);
 	}
 }
 

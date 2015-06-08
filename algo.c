@@ -23,7 +23,6 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
         puts("7 - Print meanings.");
         puts("8 - Delete meanings list.");
         puts("9 - Delete meaning from list.");
-        puts("10 - Teste.");
         puts("0 - Exit.");
         scanf("%d", &option);
         while(scanf("%*c"));
@@ -47,7 +46,8 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 insert_meaning(&head_meanings);
                 break;
             case 7:
-            	update1(head_meanings, head_words);
+                clear(head_meanings);
+            	update(head_meanings, head_words);
                 print_meanings(head_meanings);
                 break;
             case 8:
@@ -55,9 +55,6 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
                 break;
             case 9:
             	meaning_search_delete(&head_words);            	
-                break;
-            case 10:
-            	update1(head_meanings, head_words);            	
                 break;
             case 0:
                 loop = 0;
