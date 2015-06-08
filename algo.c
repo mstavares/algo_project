@@ -8,7 +8,8 @@
 #include "algo.h"
 
 // Main menu
-void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t *head_lines) 
+void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategorized, 
+										meaning_t *head_meanings, line_t *head_lines) 
 {
     int option = 0;
     int loop = 1;   
@@ -48,7 +49,10 @@ void main_menu (tree_of_strings_t *head_words, meaning_t *head_meanings, line_t 
             case 7:
                 clear(head_meanings);
             	update(head_meanings, head_words);
+            	without_categorization(head_words, &head_ncategorized);
                 print_meanings(head_meanings);
+                //puts("!!!!");
+                //print_strings(head_ncategorized, 0);
                 break;
             case 8:
                 delete_tree(&head_words);
@@ -76,6 +80,7 @@ void extension (char filename []) {
 int main () 
 {
     tree_of_strings_t *head_words = NULL;
+    tree_of_strings_t *head_ncategorized = NULL;
     meaning_t *head_meanings = NULL;
     vldt_word_t *vldt_head = NULL;
     line_t *head_lines = NULL;
@@ -98,7 +103,7 @@ int main ()
         line2word(head_lines, &vldt_head);
         word_validation(&vldt_head);
         insert_strings(&head_words, vldt_head);
-        main_menu(head_words, head_meanings, head_lines);
+        main_menu(head_words, head_ncategorized, head_meanings, head_lines);
     }
     printf("\n");
     puts("See ya");

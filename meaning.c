@@ -97,6 +97,7 @@ void clear2 (tree_of_strings_t *tree_meanings)
 	if(tree_meanings) {
 		clear2(tree_meanings->left);
 		tree_meanings->counter = 0;
+		tree_meanings->categorized = FALSE;
 		clear2(tree_meanings->right);
 	}
 }
@@ -108,6 +109,16 @@ void clear (meaning_t *head_meanings)
         clear2(temp->data);
 }
 
+void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncategorized)
+{
+	if(words) {
+		without_categorization(words->left, &(*ncategorized));
+		if(!words->categorized)
+			insert_string(&(*ncategorized), words->string);
+		without_categorization(words->left, &(*ncategorized));
+	}
+}
+
 void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 {
 	meaning_t *temp = NULL;
@@ -116,16 +127,17 @@ void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 		result = search_string(temp->data, word->string);
 		if(result) {
 			result->counter = word->counter;
+			result->categorized = TRUE;
 		}				
 	}
 }
 
-void update (meaning_t *head_meanings, tree_of_strings_t *list_words)
+void update (meaning_t *head_meanings, tree_of_strings_t *words)
 {
-	if(list_words) {
-		update(head_meanings, list_words->left);
-		update2(head_meanings, list_words);
-		update(head_meanings, list_words->right);
+	if(words) {
+		update(head_meanings, words->left);
+		update2(head_meanings, words);
+		update(head_meanings, words->right);
 	}
 }
 

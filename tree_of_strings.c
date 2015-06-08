@@ -55,6 +55,7 @@ tree_of_strings_t* create_string_element (char word [])
     if (new) {
         strcpy(new->string, word);
         new->counter = 1;
+        new->categorized = FALSE;
         new->right = NULL;
         new->left = NULL;
     }
