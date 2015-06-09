@@ -94,7 +94,7 @@ void delete_tree (tree_of_strings_t **tree)
 tree_of_strings_t* delete_string (tree_of_strings_t **tree, char to_remove [])
 {
     if (*tree) {
-        tree_of_strings_t *temp = *tree;
+        tree_of_strings_t *temp = NULL;
 	    if (strcmp(to_remove, (*tree)->string) > 0)
 		    (*tree)->right = delete_string(&(*tree)->right, to_remove);
 	    else if (strcmp(to_remove, (*tree)->string) < 0)
@@ -114,7 +114,6 @@ tree_of_strings_t* delete_string (tree_of_strings_t **tree, char to_remove [])
 			    strcpy((*tree)->string, temp->string);
 			    (*tree)->right = delete_string(&(*tree)->right, temp->string);
 		    }
-            return NULL;
         }
 	}
     return *tree;

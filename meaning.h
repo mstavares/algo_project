@@ -13,9 +13,10 @@ typedef struct meaning {
 meaning_t* create_meaning_element (char meaning []);
 void create_meaning (meaning_t **meaning_list);
 meaning_t* search_meaning (meaning_t *meaning_list, char meaning []);
-void insert_meaning (meaning_t **meaning_list);
 void print_meanings (meaning_t *meaning_list);
-void meaning_search_delete (tree_of_strings_t **tree);
+void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ());
+void meaning_insert (tree_of_strings_t **meaning_list);
+void meaning_delete (tree_of_strings_t **meaning_list);
 void update2 (meaning_t *head_meanings, tree_of_strings_t *word);
 void clear2 (tree_of_strings_t *tree_meanings);
 void update (meaning_t *head_meanings, tree_of_strings_t *words);

@@ -44,7 +44,7 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
                 create_meaning(&head_meanings);
                 break;
             case 6:
-                insert_meaning(&head_meanings);
+                meaning_insert_delete(&head_meanings, meaning_insert);
                 break;
             case 7:
                 clear(head_meanings);
@@ -58,7 +58,7 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
                 delete_tree(&head_words);
                 break;
             case 9:
-            	meaning_search_delete(&head_words);            	
+            	meaning_insert_delete(&head_meanings, meaning_delete);            	
                 break;
             case 0:
                 loop = 0;

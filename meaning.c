@@ -16,16 +16,36 @@ meaning_t* search_meaning (meaning_t *meaning_list, char meaning [])
     return NULL;
 }
 
-void meaning_search_delete (tree_of_strings_t **tree)
+void meaning_insert (tree_of_strings_t **meaning_list)
 {
-    char meaning [MAX_WORD_LENGTH];
+    char string [MAX_WORD_LENGTH];
+    puts("Type the word you want to insert.");
+    scanf("%s", string);
+    insert_string(meaning_list, string);
+}    
+
+void meaning_delete (tree_of_strings_t **meaning_list)
+{
+    char string [MAX_WORD_LENGTH];
     puts("Write the meaning who want to delete.");
-    scanf("%s", meaning);
-    tree_of_strings_t *result = delete_string(&(*tree), meaning);
-    if(result)
-        puts("Delete succeeded.");
+    scanf("%s", string);
+    delete_string(&(*meaning_list), string);
+    
+}
+
+void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ())
+{
+    char string [MAX_WORD_LENGTH];
+    meaning_t *meaning = NULL;
+    puts("Type the meaning list you want to search.");
+    scanf("%s", string);
+    while(scanf("%*c"));
+    meaning = search_meaning(*meaning_list, string);
+    if(meaning) {
+            insert_delete(&meaning->data);
+    }
     else
-        puts("\nThe meaning you searched for was not found.\n");
+        puts("The meaning list searched could not be found.");
 }
 
 meaning_t* create_meaning_element (char meaning [])
@@ -57,25 +77,6 @@ void create_meaning (meaning_t **meaning_list)
             temp->next = create_meaning_element(meaning);   
         }
     }
-}
-
-void insert_meaning (meaning_t **meaning_list)
-{
-    char string [MAX_WORD_LENGTH];
-    meaning_t *meaning = NULL;
-    puts("Type the meaning you want to search.");
-    scanf("%s", string);
-    while(scanf("%*c"));
-    meaning = search_meaning(*meaning_list, string);
-    if(meaning) {
-        if(!search_string(meaning->data, string)) {
-            puts("Type the word you want to insert.");
-            scanf("%s", string);
-            insert_string(&meaning->data ,string);
-        } 
-    }
-    else
-        puts("The meaning searched could not be found.");
 }
 
 void print_meanings (meaning_t *meaning_list)
@@ -140,10 +141,3 @@ void update (meaning_t *head_meanings, tree_of_strings_t *words)
 		update(head_meanings, words->right);
 	}
 }
-
-
-
-
-
-
-
