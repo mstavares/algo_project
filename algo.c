@@ -29,13 +29,13 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
         while(scanf("%*c"));
         switch (option) {
             case 1:
-                print_text(head_lines, 0);
+                print_text(head_lines, FALSE);
                 break;
             case 2:
-                print_text(head_lines, 1);
+                print_text(head_lines, TRUE);
                 break;
             case 3:
-                print_strings(head_words, 1);
+                print_strings(head_words, TRUE);
                 break;
             case 4:
                 word_search(head_words);
@@ -52,10 +52,10 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
             	without_categorization(head_words, &head_ncategorized);
                 print_meanings(head_meanings);
                 puts("Without categorizaton.");
-                print_strings(head_ncategorized, 0);
+                print_strings(head_ncategorized, FALSE);
                 break;
             case 8:
-                delete_tree(&head_words);
+                meaning_insert_delete(&head_meanings, delete_meaning_list);
                 break;
             case 9:
             	meaning_insert_delete(&head_meanings, meaning_delete);            	
