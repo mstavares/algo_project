@@ -20,7 +20,7 @@ void meaning_delete (tree_of_strings_t **meaning_list);
 void update2 (meaning_t *head_meanings, tree_of_strings_t *word);
 void clear2 (tree_of_strings_t *tree_meanings);
 void update (meaning_t *head_meanings, tree_of_strings_t *words);
-void clear (meaning_t *head_meanings);
+void clear (meaning_t *head_meanings, tree_of_strings_t **ncategorized);
 void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncategorized);
 
 #endif

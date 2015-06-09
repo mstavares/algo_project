@@ -47,12 +47,12 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
                 meaning_insert_delete(&head_meanings, meaning_insert);
                 break;
             case 7:
-                clear(head_meanings);
+                clear(head_meanings, &head_ncategorized);
             	update(head_meanings, head_words);
             	without_categorization(head_words, &head_ncategorized);
                 print_meanings(head_meanings);
-                //puts("!!!!");
-                //print_strings(head_ncategorized, 0);
+                puts("Without categorizaton.");
+                print_strings(head_ncategorized, 0);
                 break;
             case 8:
                 delete_tree(&head_words);

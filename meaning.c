@@ -5,7 +5,6 @@
 #include "tree_of_strings.h"
 #include "meaning.h"
 
-
 meaning_t* search_meaning (meaning_t *meaning_list, char meaning [])
 {
     meaning_t *temp = NULL;
@@ -103,9 +102,10 @@ void clear2 (tree_of_strings_t *tree_meanings)
 	}
 }
 
-void clear (meaning_t *head_meanings)
+void clear (meaning_t *head_meanings, tree_of_strings_t **ncategorized)
 {
     meaning_t *temp = NULL;
+    delete_tree(&(*ncategorized));
     for(temp = head_meanings; temp; temp = temp->next)
         clear2(temp->data);
 }
@@ -114,9 +114,13 @@ void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncate
 {
 	if(words) {
 		without_categorization(words->left, &(*ncategorized));
-		if(!words->categorized)
-			insert_string(&(*ncategorized), words->string);
-		without_categorization(words->left, &(*ncategorized));
+        printf("***%s***%d\n", words->string, words->categorized);
+		if(!words->categorized) {
+            insert_string(&(*ncategorized), words->string);
+            printf("***%s***%d\n", words->string, words->categorized);
+        }
+			
+		without_categorization(words->right, &(*ncategorized));
 	}
 }
 
