@@ -32,10 +32,25 @@ void meaning_delete (meaning_t **meaning_list)
     
 }
 
-void delete_meaning_list (meaning_t **meaning_list)
+void delete_meaning_list (meaning_t **meaning_node)
 {
-	delete_tree(&(*meaning_list)->data);
-	*meaning_list = NULL;
+	delete_tree(&(*meaning_node)->data);
+	printf("--%p--%p--\n", (*meaning_node)->prev , (*meaning_node)->next);
+	if((*meaning_node)->prev && (*meaning_node)->next) {
+		((*meaning_node)->prev)->next = (*meaning_node)->next;
+		((*meaning_node)->next)->prev = (*meaning_node)->prev;
+		free(*meaning_node);
+		*meaning_node = NULL;
+	} else if ((*meaning_node)->prev) {
+		((*meaning_node)->prev)->next = NULL;
+		free(*meaning_node);
+	}  else if ((*meaning_node)->next) {
+		((*meaning_node)->next)->prev = NULL;
+		free(*meaning_node);
+		*meaning_node = (*meaning_node)->next;
+	} else {
+		*meaning_node = NULL;
+	}
 }
 
 void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ())
@@ -47,7 +62,10 @@ void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ())
     while(scanf("%*c"));
     meaning = search_meaning(*meaning_list, string);
     if(meaning) {
-            insert_delete(&meaning);
+    	if(*meaning_list == meaning)
+    		insert_delete(&(*meaning_list));
+    	else
+    		insert_delete(&meaning);
     }
     else
         puts("The meaning list searched could not be found.");
@@ -80,7 +98,8 @@ void create_meaning (meaning_t **meaning_list)
             *meaning_list = create_meaning_element(meaning);
         else {
             for(temp = *meaning_list; temp->next; temp = temp->next);
-            temp->next = create_meaning_element(meaning);   
+            temp->next = create_meaning_element(meaning);
+            (temp->next)->prev = temp;
         }
     }
 }
