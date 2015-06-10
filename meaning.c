@@ -142,12 +142,8 @@ void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncate
 {
 	if(words) {
 		without_categorization(words->left, &(*ncategorized));
-        printf("***%s***%d\n", words->string, words->categorized);
-		if(!words->categorized) {
-            insert_string(&(*ncategorized), words->string);
-            printf("***%s***%d\n", words->string, words->categorized);
-        }
-			
+		if(!words->categorized)
+            insert_string(&(*ncategorized), words->string);	
 		without_categorization(words->right, &(*ncategorized));
 	}
 }
@@ -173,7 +169,7 @@ void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 		result = search_string(temp->data, word->string);
 		if(result) {
 			temp->absolute_frequency += word->counter;
-			result->categorized = TRUE;
+			word->categorized = TRUE;
 		}				
 	}
 }

@@ -56,8 +56,6 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
                 break;
             case 8:
                 meaning_insert_delete(&head_meanings, delete_meaning_list);
-                if(head_meanings)
-                	puts("fora esta null");
                 break;
             case 9:
             	meaning_insert_delete(&head_meanings, meaning_delete);            	

@@ -69,7 +69,8 @@ void print_strings (tree_of_strings_t *tree, int ocurrences)
         print_strings(tree->left, ocurrences);
         printf("Word: %s ", tree->string);
         if(ocurrences)
-            printf("- Occurrences: %d",tree->counter);
+            //printf("- Occurrences: %d",tree->counter);
+            printf("- Occurrences: %d",tree->categorized);
         printf("\n");
         print_strings(tree->right, ocurrences);
     }
@@ -82,6 +83,7 @@ void delete_tree (tree_of_strings_t **tree)
         delete_tree(&(*tree)->left);
         free(*tree);
         delete_tree(&(*tree)->right);
+        *tree = NULL;
     }
 }
 
