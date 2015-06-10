@@ -65,7 +65,6 @@ void word_validation (vldt_word_t **list)
     }
 }
 
-// Clears the list of validated words
 void vldt_word_list_delete (vldt_word_t **list)
 {
 	vldt_word_t *temp = NULL;

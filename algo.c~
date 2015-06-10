@@ -103,6 +103,7 @@ int main ()
         line2word(head_lines, &vldt_head);
         word_validation(&vldt_head);
         insert_strings(&head_words, vldt_head);
+        vldt_word_list_delete(&vldt_head);
         main_menu(head_words, head_ncategorized, head_meanings, head_lines);
     }
     printf("\n");

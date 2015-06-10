@@ -5,6 +5,7 @@
 #include "tree_of_strings.h"
 #include "meaning.h"
 
+// Search meaning introduced by the user
 meaning_t* search_meaning (meaning_t *meaning_list, char meaning [])
 {
     meaning_t *temp = NULL;
@@ -15,23 +16,25 @@ meaning_t* search_meaning (meaning_t *meaning_list, char meaning [])
     return NULL;
 }
 
-void meaning_insert (meaning_t **meaning_list)
+// Inserts the meaning on tree
+void meaning_insert (meaning_t **meaning_node)
 {
     char string [MAX_WORD_LENGTH];
     puts("Type the word you want to insert.");
     scanf("%s", string);
-    insert_string(&(*meaning_list)->data, string);
+    insert_string(&(*meaning_node)->data, string);
 }    
 
-void meaning_delete (meaning_t **meaning_list)
+// Deletes the meaning on tree
+void meaning_delete (meaning_t **meaning_node)
 {
     char string [MAX_WORD_LENGTH];
     puts("Write the meaning who want to delete.");
     scanf("%s", string);
-    delete_string(&(*meaning_list)->data, string);
-    
+    delete_string(&(*meaning_node)->data, string);
 }
 
+// Deletes the list of meanings
 void delete_meaning_list (meaning_t **meaning_node)
 {
 	delete_tree(&(*meaning_node)->data);
@@ -52,6 +55,7 @@ void delete_meaning_list (meaning_t **meaning_node)
 	}
 }
 
+// Main function to insert and delete
 void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ())
 {
     char string [MAX_WORD_LENGTH];
@@ -70,6 +74,7 @@ void meaning_insert_delete (meaning_t **meaning_list, void (*insert_delete) ())
         puts("The meaning list searched could not be found.");
 }
 
+// Allocates memory for a new meanings list
 meaning_t* create_meaning_element (char meaning [])
 {
     meaning_t *new = (meaning_t*) malloc (sizeof(meaning_t));
@@ -84,6 +89,7 @@ meaning_t* create_meaning_element (char meaning [])
     return new;
 }
 
+// Create one new meanings list
 void create_meaning (meaning_t **meaning_list)
 {
     meaning_t *temp = NULL;
@@ -103,6 +109,7 @@ void create_meaning (meaning_t **meaning_list)
     }
 }
 
+// Prints a list of meanings with the frequencies
 void print_meanings (meaning_t *meaning_list)
 {
     meaning_t *temp = NULL;
@@ -119,6 +126,7 @@ void print_meanings (meaning_t *meaning_list)
     }
 }
 
+// Clears the categorization of the words
 void clear2 (tree_of_strings_t *tree_meanings)
 {
 	if(tree_meanings) {
@@ -128,6 +136,9 @@ void clear2 (tree_of_strings_t *tree_meanings)
 	}
 }
 
+/* Clears all regs
+ * Categorization and absolute frequencies
+ */
 void clear (meaning_t *head_meanings, tree_of_strings_t **ncategorized)
 {
     meaning_t *temp = NULL;
@@ -138,6 +149,7 @@ void clear (meaning_t *head_meanings, tree_of_strings_t **ncategorized)
     }
 }
 
+// Inserts the words without meaning associated on tree
 void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncategorized)
 {
 	if(words) {
@@ -148,6 +160,7 @@ void without_categorization (tree_of_strings_t *words, tree_of_strings_t **ncate
 	}
 }
 
+// Calculates the sum of the words and the relative frequencies
 void update3 (meaning_t *head_meanings)
 {
 	int words_sum = 0;
@@ -161,6 +174,7 @@ void update3 (meaning_t *head_meanings)
 			temp->relative_frequency = (temp->absolute_frequency * 100) / words_sum;
 }
 
+// Marks words with meanings associated
 void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 {
 	meaning_t *temp = NULL;
@@ -174,6 +188,7 @@ void update2 (meaning_t *head_meanings, tree_of_strings_t *word)
 	}
 }
 
+// Runs the tree of words and calls the updates of functions
 void update (meaning_t *head_meanings, tree_of_strings_t *words)
 {
 	if(words) {
