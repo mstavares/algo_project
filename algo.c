@@ -51,7 +51,7 @@ void main_menu (tree_of_strings_t *head_words, tree_of_strings_t* head_ncategori
             	update(head_meanings, head_words);
             	without_categorization(head_words, &head_ncategorized);
                 print_meanings(head_meanings);
-                puts("Without categorizaton.");
+                puts("Words without meaning associated.");
                 print_strings(head_ncategorized, FALSE);
                 break;
             case 8:
